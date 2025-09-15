@@ -1,0 +1,130 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.manrope-fz {
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+body {
+  background-color: black;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.app_window {
+  width: 80%;
+  height: 90%;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  gap: 10px;
+  padding: 20px 10px;
+  /***styling***/
+  background-color: #f0f4f9;
+  border-radius: 6px;
+}
+
+.toDo_window {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  border-radius: 10px;
+  position: relative;
+}
+
+.theme_changer {
+  position: absolute;
+  border: green solid 1px;
+  width: 50px;
+  height: 30px;
+  top: 0px;
+  right: 5px;
+}
+
+.todo_list {
+  position: absolute;
+  padding: 15px 5px;
+  width: 80%;
+  height: 500px;
+  top: 30px;
+  left: 5px;
+}
+
+#toDo_felt {
+  font-family: "Manrope";
+  font-weight: 500;
+}
+
+#toDo_felt input[type="radio"] {
+  /* width: 100%; */
+  margin: 15px 0px;
+
+  accent-color: #ff0000;
+}
+
+.input_box {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  width: 70%;
+  height: 50px;
+  bottom: 5px;
+  right: 50%;
+  translate: 50%;
+}
+
+#input_felt {
+  width: 100%;
+  height: 100%;
+  font-size: 15px;
+  padding: 13px 20px;
+  border-radius: 15px;
+  border: none;
+  font-family: "Manrope";
+  background-color: #f0f4f9;
+}
+#input_felt_div {
+  flex: 7;
+  flex-basis: 0;
+  margin-right: 5px;
+}
+
+#add_but {
+  order: 2;
+  width: auto;
+  padding: 5px;
+  flex: 1;
+  font-family: "Manrope";
+  font-weight: 700;
+}
+
+/***groups***/
+
+.group_window {
+  width: 100%;
+  height: 100%;
+  background: none;
+  padding: 10px 3px;
+  font-family: "Manrope";
+}
+
+.group_window div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 7px 7px;
+  margin: 7px 0px;
+}
+
+.group1 {
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+  background-color: white;
+}
