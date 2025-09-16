@@ -118,13 +118,64 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
+  border-radius: 10px;
+  background-color: white;
+  width: 100%;
+  cursor: pointer;
   padding: 7px 7px;
   margin: 7px 0px;
 }
 
-.group1 {
-  width: 100%;
-  height: 40px;
-  border-radius: 10px;
-  background-color: white;
+.group2:hover {
+  transform: translate(1px, 2px);
+  box-shadow: 1px 2px;
+}
+.group1:hover {
+  transform: translate(1px, 2px);
+  box-shadow: 1px 2px;
+}
+
+/*****confirm box******/
+.hidden {
+  display: none !important;
+}
+
+#confirmation_box {
+  width: 250px;
+  height: fit-content;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid black;
+  border-radius: 15px;
+  box-shadow: 3px 5px black;
+  z-index: 3;
+}
+#confirmation_box div {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin-top: 5px;
+}
+#confirmation_box button {
+  padding: 5px 10px;
+  margin-top: 10px;
+  font-family: "Manrope";
+  font-weight: 700;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+#confirmation_box h2 {
+  text-align: center;
+  font-family: "Manrope";
+  font-size: 25px;
+  font-weight: 700;
 }

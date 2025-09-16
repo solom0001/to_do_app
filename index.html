@@ -22,10 +22,26 @@
         </div>
         <div class="toDo_window">
             <div class="theme_changer"></div>
+
+            <div class="hidden" id="confirmation_box">
+                <h2>Mark as done?</h2>
+                <div id="button_box">
+                    <button id="confirm">Confirm</button>
+                    <button id="cancel">Cancel</button>
+                </div>
+
+            </div>
+
             <div class="todo_list">
                 <form id="toDo_felt">
                     <input type="radio" id="td_list" name="td_list" value="HTML">
                     <label for="td_list">I have to do this today</label><br>
+
+                </form>
+            </div>
+            <div class="todo_list hidden" id="done_list">
+                <form id="done_felt">
+
 
                 </form>
             </div>
