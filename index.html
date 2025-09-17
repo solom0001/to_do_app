@@ -16,30 +16,40 @@
 
     <div class="app_window">
         <div class="group_window">
-            <div class="group1">To-do</div>
-            <div class="group2">Done</div>
+            <div id="group1" class="activated">To-do</div>
+            <div id="group2">Done</div>
 
         </div>
         <div class="toDo_window">
+            <h1 id="title">To-Do list</h1>
             <div class="theme_changer"></div>
 
-            <div class="hidden" id="confirmation_box">
+            <div class="conf_box hidden" id="confirmation_box">
                 <h2>Mark as done?</h2>
-                <div id="button_box">
+                <div id="button_box" class="button_case">
                     <button id="confirm">Confirm</button>
                     <button id="cancel">Cancel</button>
+                    <button id="delete1">delete</button>
+                </div>
+
+            </div>
+            <div class="conf_box hidden" id="undo_box">
+                <h2>Undo or delete?</h2>
+                <div id="button_box2" class="button_case">
+                    <button id="undo">Undo</button>
+                    <button id="cancel2">Cancel</button>
+                    <button id="delete">delete</button>
                 </div>
 
             </div>
 
             <div class="todo_list">
                 <form id="toDo_felt">
-                    <input type="radio" id="td_list" name="td_list" value="HTML">
-                    <label for="td_list">I have to do this today</label><br>
+
 
                 </form>
             </div>
-            <div class="todo_list hidden" id="done_list">
+            <div class="done_list hidden">
                 <form id="done_felt">
 
 

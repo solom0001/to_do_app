@@ -3,10 +3,20 @@
 const userInput = document.querySelector("#input_felt");
 const addButton = document.querySelector("#add_but");
 const toDoPg = document.querySelector("#toDo_felt");
+const donePg = document.querySelector("#done_felt");
+//////confirm boxes
 const confirmBox = document.querySelector("#confirmation_box");
 const confirmBut = document.querySelector("#confirm");
 const cancelBut = document.querySelector("#cancel");
+const undoBox = document.querySelector("#undo_box");
+const undoBut = document.querySelector("#undo");
+// const cancelBut2 = document.querySelector("#cance2");
+const deleteBut = document.querySelector("#delete");
 const confButtCase = document.querySelector("#button_box");
+const undoButtCase = document.querySelector("#button_box2");
+const groupButtons = document.querySelector(".group_window");
+///////////
+
 let msg = "";
 // The prototype for all todos:
 let task = {
@@ -51,21 +61,55 @@ let task = {
 let toDos = [];
 let doneArr = [];
 
-window.addEventListener("DOMContentLoaded", start);
+window.addEventListener("DOMContentLoaded", () => {
+  toDos = JSON.parse(localStorage.getItem("toDo_tasks")) || [];
+  doneArr = JSON.parse(localStorage.getItem("done_tasks")) || [];
+  updateToList();
+
+  start();
+});
 
 function start() {
   addButton.addEventListener("click", addObject);
+  //group button handling
+  groupButtons.addEventListener("click", (event) => {
+    if (event.target.id === "group2") {
+      document.querySelector("#group2").classList.add("activated");
+      document.querySelector("#group1").classList.remove("activated");
+      document.querySelector(".done_list").classList.remove("hidden");
+      document.querySelector(".todo_list").classList.add("hidden");
+      document.querySelector(".input_box").classList.add("hidden");
+      document.querySelector("#title").textContent = "Done list";
+    } else if (event.target.id === "group1") {
+      document.querySelector("#group1").classList.add("activated");
+      document.querySelector("#group2").classList.remove("activated");
+      document.querySelector(".todo_list").classList.remove("hidden");
+      document.querySelector(".done_list").classList.add("hidden");
+      document.querySelector(".input_box").classList.remove("hidden");
+      document.querySelector("#title").textContent = "To-Do list";
+    }
+    updateToList();
+  });
   toDoPg.addEventListener("change", (event) => {
     if (event.target.tagName === "INPUT") {
       const todoId = event.target.value; //target kun den id/todo der er blevet changed
       markAsDone(todoId);
     }
   }); // here id like to set 1 even listener on the entire form, and use target for the individual radio inputs.
+
+  donePg.addEventListener("change", (event) => {
+    if (event.target.tagName === "INPUT") {
+      const todoId = event.target.value; //target kun den id/todo der er blevet changed
+      markAsUnDone(todoId);
+    }
+  }); // here id like to set 1 even listener on the entire form, and use target for the individual radio inputs.
 }
 function addObject() {
   const newTask = prepareObject();
   toDos.push(newTask);
-  console.log("toDo's:", toDos);
+  localStorage.setItem("toDo_tasks", JSON.stringify(toDos));
+
+  //   console.log("toDo's:", toDos);
   updateToList();
 }
 function markAsDone(id) {
@@ -79,23 +123,58 @@ function markAsDone(id) {
     confirmBox.classList.remove("hidden");
     // task.isDone = true;
 
-    confButtCase.addEventListener("click", (event) => {
+    const handler = (event) => {
       if (event.target.id === "confirm") {
         task.isDone = true;
-        toDos = toDos.filter((task) => task.id !== id);
+
         doneArr.push(task);
-        console.log("Done tasks:", doneArr);
-        confirmBox.classList.add("hidden");
+        toDos = toDos.filter((task) => task.id !== id);
+        //update local storage.
+
+        // console.log("Done tasks:", doneArr);
       } else if (event.target.id === "cancel") {
-        confirmBox.classList.add("hidden");
-        return null;
+      } else if (event.target.id === "delete1") {
+        toDos = toDos.filter((task) => task.id !== id);
       }
-    });
-    // toDos = toDos.filter((task) => task.id !== id);
-    // doneArr.push(task);
+      localStorage.setItem("toDo_tasks", JSON.stringify(toDos)); //update local storage.
+      localStorage.setItem("done_tasks", JSON.stringify(doneArr));
+      updateToList();
+
+      confirmBox.classList.add("hidden");
+      confButtCase.removeEventListener("click", handler);
+    };
+    confButtCase.addEventListener("click", handler);
   }
 
   //   doneArr = toDos.filter((elm) => elm.isDone === true);
+}
+function markAsUnDone(id) {
+  const task = doneArr.find((elm) => elm.id === id);
+  if (task) {
+    undoBox.classList.remove("hidden");
+
+    const handler = (event) => {
+      if (event.target.id === "undo") {
+        task.isDone = false;
+
+        toDos.push(task);
+        doneArr = doneArr.filter((task) => task.id !== id);
+        //update local storage.
+
+        // console.log("Done tasks:", doneArr);
+      } else if (event.target.id === "cancel2") {
+      } else if (event.target.id === "delete") {
+        doneArr = doneArr.filter((task) => task.id !== id);
+      }
+      localStorage.setItem("toDo_tasks", JSON.stringify(toDos)); //update local storage.
+      localStorage.setItem("done_tasks", JSON.stringify(doneArr));
+      updateToList();
+
+      undoBox.classList.add("hidden");
+      undoButtCase.removeEventListener("click", handler);
+    };
+    undoButtCase.addEventListener("click", handler);
+  }
 }
 
 // function confirmTaskStat() {
@@ -122,6 +201,7 @@ function markAsDone(id) {
 
 function prepareObject() {
   msg = userInput.value; //I save the input at a variable for manipulation
+
   if (!msg) return null; //I return nothing if nothings been entered in felt
   //   const uuid = self.crypto.randomUUID();
   const list = Object.create(task);
@@ -135,9 +215,11 @@ function prepareObject() {
 
 function updateToList() {
   toDoPg.innerHTML = "";
-
+  //   const storedToDos = JSON.parse(localStorage.getItem("toDo_tasks")) || [];
+  //   console.log("storedTodos:", storedToDos);
   //   let myArray = addObject();
   //   myArray
+
   toDos.forEach((elm) => {
     toDoPg.innerHTML += `
     <input type="radio" id="${elm.id}" value="${elm.id}">
@@ -145,6 +227,14 @@ function updateToList() {
   });
 
   //once the ToDo array has been updated, update the the radio list to include the new task
+
+  // Update the done list
+  donePg.innerHTML = "";
+  doneArr.forEach((elm) => {
+    donePg.innerHTML += `
+      <input type="radio" id="${elm.id}" value="${elm.id}">
+      <label for="${elm.id}">${elm.desc}</label><br>`;
+  });
 }
 
 /////////////////////////////////////////////////Controller

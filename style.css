@@ -10,7 +10,10 @@
 }
 
 body {
-  background-color: black;
+  background-image: url(cloudsBackdrop.webp);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -37,23 +40,30 @@ body {
   border-radius: 10px;
   position: relative;
 }
+.toDo_window h1 {
+  font-size: 45px;
+  font-family: "Manrope";
+  margin: 20px 18px;
+  color: orange;
+}
 
-.theme_changer {
+/* .theme_changer {
   position: absolute;
   border: green solid 1px;
   width: 50px;
   height: 30px;
   top: 0px;
   right: 5px;
-}
+} */
 
 .todo_list {
+  display: flex;
   position: absolute;
   padding: 15px 5px;
   width: 80%;
   height: 500px;
-  top: 30px;
-  left: 5px;
+  top: 70px;
+  left: 10px;
 }
 
 #toDo_felt {
@@ -64,14 +74,46 @@ body {
 #toDo_felt input[type="radio"] {
   /* width: 100%; */
   margin: 15px 0px;
+  cursor: pointer;
+  accent-color: black;
+}
+#done_felt input[type="radio"] {
+  /* width: 100%; */
+  margin: 15px 0px;
+  cursor: pointer;
+  accent-color: black;
+}
 
-  accent-color: #ff0000;
+.cross {
+  text-decoration: line-through;
+}
+#done_felt label {
+  cursor: pointer;
+}
+#toDo_felt label {
+  cursor: pointer;
+}
+.done_list {
+  display: flex;
+  position: absolute;
+  font-family: "Manrope";
+  padding: 15px 5px;
+  width: 80%;
+  height: 500px;
+  top: 70px;
+  left: 10px;
+}
+
+#done_felt {
+  font-family: "Manrope";
+  font-weight: 500;
 }
 
 .input_box {
   position: absolute;
   display: flex;
   flex-direction: row;
+  align-items: center;
   width: 70%;
   height: 50px;
   bottom: 5px;
@@ -89,22 +131,37 @@ body {
   font-family: "Manrope";
   background-color: #f0f4f9;
 }
+
 #input_felt_div {
   flex: 7;
   flex-basis: 0;
+
   margin-right: 5px;
 }
 
 #add_but {
   order: 2;
   width: auto;
+  height: 80%;
   padding: 5px;
+  border-color: orange;
+  border-radius: 5px;
   flex: 1;
   font-family: "Manrope";
   font-weight: 700;
+  background-color: white;
+  transition: transform 0.3s ease;
+}
+#add_but:hover {
+  background-color: orange;
+  transform: translate(2px, 2px);
+  color: white;
+  font-weight: 700;
+  border: none;
+  box-shadow: -3px 1px black;
 }
 
-/***groups***/
+/***groups buttons***/
 
 .group_window {
   width: 100%;
@@ -112,36 +169,53 @@ body {
   background: none;
   padding: 10px 3px;
   font-family: "Manrope";
+  font-weight: 600;
 }
 
 .group_window div {
   display: flex;
   flex-direction: row;
   align-items: center;
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: white;
   width: 100%;
   cursor: pointer;
   padding: 7px 7px;
   margin: 7px 0px;
+  box-shadow: -2px 2px;
+  transition: transform 0.3s ease;
 }
 
-.group2:hover {
-  transform: translate(1px, 2px);
-  box-shadow: 1px 2px;
-}
-.group1:hover {
-  transform: translate(1px, 2px);
-  box-shadow: 1px 2px;
+.activated {
+  color: rgb(96, 96, 96);
+  background-color: hsl(0, 0%, 92%) !important;
+  box-shadow: inset 3px 3px #c8c8c8, inset -1px -1px #fff !important;
+  cursor: default !important;
 }
 
+#group2:hover {
+  background-color: hsl(0, 0%, 100%) !important;
+  transform: translate(-2px, 2px);
+  box-shadow: 2px 3px;
+}
+#group1:hover {
+  background-color: hsl(0, 0%, 100%) !important;
+  transform: translate(-2px, 2px);
+  box-shadow: 2px 3px;
+}
+.activated:hover {
+  transform: none !important;
+  /* box-shadow: none !important; */
+  box-shadow: inset 3px 3px #c8c8c8, inset -1px -1px #fff !important;
+}
 /*****confirm box******/
 .hidden {
   display: none !important;
 }
 
-#confirmation_box {
+.conf_box {
   width: 250px;
+  font-family: "Manrope";
   height: fit-content;
   padding: 10px;
   display: flex;
@@ -156,21 +230,40 @@ body {
   box-shadow: 3px 5px black;
   z-index: 3;
 }
-#confirmation_box div {
+.conf_box div {
   display: flex;
   flex-direction: column;
   width: 70%;
   margin-top: 5px;
 }
-#confirmation_box button {
+.conf_box button {
   padding: 5px 10px;
   margin-top: 10px;
   font-family: "Manrope";
   font-weight: 700;
+  border-radius: 5px;
 }
 
 button:hover {
   cursor: pointer;
+}
+
+#delete {
+  background-color: rgb(243, 53, 53);
+  color: white;
+  border: none;
+}
+#delete1 {
+  background-color: rgb(243, 53, 53);
+  color: white;
+  border: none;
+}
+
+#delete:hover {
+  background-color: rgb(255, 122, 122);
+}
+#delete1:hover {
+  background-color: rgb(255, 122, 122);
 }
 
 #confirmation_box h2 {
