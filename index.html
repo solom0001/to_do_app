@@ -12,7 +12,7 @@
     <title>To-do</title>
 </head>
 
-<body>
+<body data-filter="light">
 
     <div class="app_window">
         <div class="group_window">
@@ -22,7 +22,13 @@
         </div>
         <div class="toDo_window">
             <h1 id="title">To-Do list</h1>
-            <div class="theme_changer"></div>
+            <div class="themes">
+                <label for="theme_changer">Choose a theme:</label>
+                <select id="theme_changer" name="theme_changer">
+                    <option value="light">light</option>
+                    <option value="dark">dark</option>
+                </select>
+            </div>
 
             <div class="conf_box hidden" id="confirmation_box">
                 <h2>Mark as done?</h2>

@@ -3,6 +3,39 @@
   box-sizing: border-box;
 }
 
+[data-filter="light"] {
+  --body-bg-col: url(imgs/cloudsBackdrop.webp);
+  --window-bg-col: #f0f4f9;
+  --main-bg-col: white;
+  --col: black;
+  --h1-col: orange;
+  --h2-col: black;
+  --accent-col: orange;
+  --alt-txt-col: black;
+  --deactivated-col: rgb(96, 96, 96);
+  --da-box-shadowX: #c8c8c8;
+  --da-box-shadowY: #fff;
+  --activeted-state: hsl(0, 0%, 92%);
+  --inactive-hover: hsl(0, 0%, 100%);
+  --radio-color: black;
+}
+[data-filter="dark"] {
+  --body-bg-col: url(imgs/nightmodeIMG.webp);
+  --window-bg-col: #1e1e1e;
+  --main-bg-col: #0f0f0f;
+  --col: white;
+  --h1-col: orange;
+  --h2-col: black;
+  --accent-col: orange;
+  --alt-txt-col: white;
+  --deactivated-col: #4e4e4e;
+  --da-box-shadowX: #3a3a3a;
+  --da-box-shadowY: #5e5e5e;
+  --activeted-state: hsl(0, 0%, 3%);
+  --inactive-hover: hsl(0, 0%, 8%);
+  --radio-color: orange;
+}
+
 .manrope-fz {
   font-family: "Manrope", sans-serif;
   font-weight: 700;
@@ -10,11 +43,12 @@
 }
 
 body {
-  background-image: url(cloudsBackdrop.webp);
+  background-image: var(--body-bg-col);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   height: 100vh;
+  color: var(--col);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,32 +63,49 @@ body {
   gap: 10px;
   padding: 20px 10px;
   /***styling***/
-  background-color: #f0f4f9;
+  background-color: var(--window-bg-col);
   border-radius: 6px;
 }
 
 .toDo_window {
   width: 100%;
   height: 100%;
-  background-color: white;
+  background-color: var(--main-bg-col);
   border-radius: 10px;
   position: relative;
 }
 .toDo_window h1 {
   font-size: 45px;
+  width: 300px;
   font-family: "Manrope";
   margin: 20px 18px;
-  color: orange;
+  color: var(--h1-col);
 }
 
-/* .theme_changer {
+.themes {
   position: absolute;
-  border: green solid 1px;
-  width: 50px;
-  height: 30px;
-  top: 0px;
-  right: 5px;
-} */
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  width: 300px;
+  font-family: "Manrope";
+  font-weight: 500;
+  top: 10px;
+  right: 10px;
+}
+#theme_changer {
+  margin-left: 5px;
+  font-family: "Manrope";
+  border: 2px solid var(--accent-col);
+  border-radius: 3px;
+  flex: 1;
+  color: var(--accent-col);
+  background-color: var(--main-bg-col);
+  border: 1px solid;
+}
+#theme_changer option {
+  font-family: "Manrope";
+}
 
 .todo_list {
   display: flex;
@@ -75,18 +126,19 @@ body {
   /* width: 100%; */
   margin: 15px 0px;
   cursor: pointer;
-  accent-color: black;
+  accent-color: var(--radio-color);
 }
 #done_felt input[type="radio"] {
   /* width: 100%; */
   margin: 15px 0px;
   cursor: pointer;
-  accent-color: black;
+  accent-color: var(--radio-color);
 }
 
 .cross {
   text-decoration: line-through;
 }
+
 #done_felt label {
   cursor: pointer;
 }
@@ -129,7 +181,8 @@ body {
   border-radius: 15px;
   border: none;
   font-family: "Manrope";
-  background-color: #f0f4f9;
+  color: var(--alt-txt-col);
+  background-color: var(--window-bg-col);
 }
 
 #input_felt_div {
@@ -144,21 +197,22 @@ body {
   width: auto;
   height: 80%;
   padding: 5px;
-  border-color: orange;
+  border: 2px solid var(--accent-col);
   border-radius: 5px;
   flex: 1;
+  color: var(--accent-col);
   font-family: "Manrope";
   font-weight: 700;
-  background-color: white;
+  background: none;
   transition: transform 0.3s ease;
 }
 #add_but:hover {
-  background-color: orange;
+  background-color: var(--accent-col);
   transform: translate(2px, 2px);
-  color: white;
+  color: var(--alt-txt-col);
   font-weight: 700;
   border: none;
-  box-shadow: -3px 1px black;
+  box-shadow: -3px 1px var(--col);
 }
 
 /***groups buttons***/
@@ -177,36 +231,40 @@ body {
   flex-direction: row;
   align-items: center;
   border-radius: 5px;
-  background-color: white;
+  color: var(--alt-txt-col);
+  background-color: var(--main-bg-col);
   width: 100%;
   cursor: pointer;
   padding: 7px 7px;
   margin: 7px 0px;
-  box-shadow: -2px 2px;
+  box-shadow: -2px 2px var(--col);
   transition: transform 0.3s ease;
 }
 
 .activated {
-  color: rgb(96, 96, 96);
-  background-color: hsl(0, 0%, 92%) !important;
-  box-shadow: inset 3px 3px #c8c8c8, inset -1px -1px #fff !important;
+  color: var(--deactivated-col) !important;
+  background-color: var(--activeted-state) !important;
+  box-shadow: inset 3px 3px var(--da-box-shadowX), inset -1px -1px var(--da-box-shadowY) !important;
   cursor: default !important;
 }
 
 #group2:hover {
-  background-color: hsl(0, 0%, 100%) !important;
+  background-color: var(--inactive-hover) !important;
   transform: translate(-2px, 2px);
-  box-shadow: 2px 3px;
+  box-shadow: 2px 3px var(--accent-col);
+  color: var(--accent-col);
 }
 #group1:hover {
-  background-color: hsl(0, 0%, 100%) !important;
+  background-color: var(--inactive-hover) !important;
   transform: translate(-2px, 2px);
-  box-shadow: 2px 3px;
+  box-shadow: 2px 3px var(--accent-col);
+  color: var(--accent-col);
 }
 .activated:hover {
   transform: none !important;
+  background-color: var(--da-box-shadowX) !important;
   /* box-shadow: none !important; */
-  box-shadow: inset 3px 3px #c8c8c8, inset -1px -1px #fff !important;
+  box-shadow: inset 3px 3px var(--da-box-shadowX), inset -1px -1px var(--da-box-shadowY) !important;
 }
 /*****confirm box******/
 .hidden {
@@ -225,9 +283,9 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border: 1px solid black;
+  border: 1px solid var(--col);
   border-radius: 15px;
-  box-shadow: 3px 5px black;
+  box-shadow: 3px 5px var(--col);
   z-index: 3;
 }
 .conf_box div {
@@ -250,12 +308,12 @@ button:hover {
 
 #delete {
   background-color: rgb(243, 53, 53);
-  color: white;
+  color: var(--alt-txt-col);
   border: none;
 }
 #delete1 {
   background-color: rgb(243, 53, 53);
-  color: white;
+  color: var(--alt-txt-col);
   border: none;
 }
 

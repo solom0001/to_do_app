@@ -15,7 +15,8 @@ const deleteBut = document.querySelector("#delete");
 const confButtCase = document.querySelector("#button_box");
 const undoButtCase = document.querySelector("#button_box2");
 const groupButtons = document.querySelector(".group_window");
-///////////
+///////////Themes
+const storedTheme = localStorage.getItem("storedTheme");
 
 let msg = "";
 // The prototype for all todos:
@@ -25,7 +26,7 @@ let task = {
   //   number: "",
   isDone: false,
 };
-
+//Algorithm
 //when you open the app, you are met with a large window, with a side window right beside
 //In the big window, there should be an input field at the bottom that allows for
 //user to input text,evt no. felt
@@ -35,34 +36,11 @@ let task = {
 //this status, it should appear in that group.
 //If done, it should dissappear from the to-do list.
 
-/////////////////////////////////////////////////Model
-//create necessary update that then reflects on the view
-
-//sq:1
-//update the todolist, that could have other tasks, and then make the view update accordingly
-
-//sq:2
-//update the window/view to remove the done task
-//if there is a done window/view, update that to contain the new task
-
-/////////////////////////////////////////////////View
-//recieve the input from the user
-
-//sq:1
-//get the new task from the input felt upon an add button click
-// after model update, update the todo list options.
-
-//sq:2
-//After entering a new task, clear the input felt
-//When a task gets marked done, open a confirmation window
-//if the user decides to confirm, the task should disappear from to-do list and enter another,else
-//they choose cancel and that whole event is ignored
-
 let toDos = [];
 let doneArr = [];
 
 window.addEventListener("DOMContentLoaded", () => {
-  toDos = JSON.parse(localStorage.getItem("toDo_tasks")) || [];
+  toDos = JSON.parse(localStorage.getItem("toDo_tasks")) || []; //setting the arrays to refrence the local storage/or if empty an empty array
   doneArr = JSON.parse(localStorage.getItem("done_tasks")) || [];
   updateToList();
 
@@ -103,26 +81,36 @@ function start() {
       markAsUnDone(todoId);
     }
   }); // here id like to set 1 even listener on the entire form, and use target for the individual radio inputs.
-}
-function addObject() {
-  const newTask = prepareObject();
-  toDos.push(newTask);
-  localStorage.setItem("toDo_tasks", JSON.stringify(toDos));
 
-  //   console.log("toDo's:", toDos);
-  updateToList();
+  ///theme changer////
+  document.querySelector("#theme_changer").addEventListener("change", selectTheme);
+  if (storedTheme !== null) {
+    document.querySelector("body").dataset.filter = storedTheme;
+  } else {
+    selectTheme();
+  }
 }
+
+/////////////////////////////////////////////////Controller
+//register the new input/item and adds it to the relevant list
+
+//sq:1
+//save this  task in an organised list, maybe a todolist
+
+//sq:2
+//Upon change to done, the list, its object should be removed from toDo array
+//it should then be saved under a new list/array, a done list
+
 function markAsDone(id) {
   //go into the array and get the object that has been marked
   //assign(push) the object to a ney array
   //print thi new array.
   //input: element from radio id   output:new done array
   const task = toDos.find((elm) => elm.id === id);
+
   if (task) {
     //show confrim box
     confirmBox.classList.remove("hidden");
-    // task.isDone = true;
-
     const handler = (event) => {
       if (event.target.id === "confirm") {
         task.isDone = true;
@@ -177,27 +165,32 @@ function markAsUnDone(id) {
   }
 }
 
-// function confirmTaskStat() {
-//   //ask user whether user would like to add to done or not
-//   //   let userChoice;
-//   //   switch (expression) {
-//   //     case x:
-//   //       // code block
-//   //       break;
-//   //     case y:
-//   //       // code block
-//   //       break;
-//   //     default:
-//   //     // code block
-//   //   }
+function selectTheme() {
+  const value = document.querySelector("#theme_changer").value;
 
-//   confButtCase.addEventListener("click", (event) => {
-//     if (event.target.id === "confirm") {
-//       task.isDone = true;
-//     } else if (event.target.id === "cancel") {
-//     }
-//   });
-// }
+  console.log("chosenTheme", value);
+  localStorage.setItem("storedtheme", value);
+  document.querySelector("body").dataset.filter = value;
+}
+
+function addObject() {
+  const newTask = prepareObject();
+  toDos.push(newTask);
+  localStorage.setItem("toDo_tasks", JSON.stringify(toDos));
+
+  //   console.log("toDo's:", toDos);
+  updateToList();
+}
+
+/////////////////////////////////////////////////Model
+//create necessary update that then reflects on the view
+
+//sq:1
+//update the todolist, that could have other tasks, and then make the view update accordingly
+
+//sq:2
+//update the window/view to remove the done task
+//if there is a done window/view, update that to contain the new task
 
 function prepareObject() {
   msg = userInput.value; //I save the input at a variable for manipulation
@@ -212,6 +205,19 @@ function prepareObject() {
 
   return list;
 }
+
+/////////////////////////////////////////////////View
+//recieve the input from the user
+
+//sq:1
+//get the new task from the input felt upon an add button click
+// after model update, update the todo list options.
+
+//sq:2
+//After entering a new task, clear the input felt
+//When a task gets marked done, open a confirmation window
+//if the user decides to confirm, the task should disappear from to-do list and enter another,else
+//they choose cancel and that whole event is ignored
 
 function updateToList() {
   toDoPg.innerHTML = "";
@@ -236,13 +242,3 @@ function updateToList() {
       <label for="${elm.id}">${elm.desc}</label><br>`;
   });
 }
-
-/////////////////////////////////////////////////Controller
-//register the new input/item and adds it to the relevant list
-
-//sq:1
-//save this  task in an organised list, maybe a todolist
-
-//sq:2
-//Upon change to done, the list, its object should be removed from toDo array
-//it should then be saved under a new list/array, a done list
